@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Depósito - Arena IA</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+
+<body>
+    <div class="deposito-container">
+        <h2>Adquirir Créditos</h2>
+        <form id="depositoForm">
+            <label for="valor">Valor do Depósito:</label>
+            <input type="number" id="valor" min="1" required>
+            <button type="submit">Depositar</button>
+        </form>
+        <p><a href="index.html">Voltar ao jogo</a></p>
+    </div>
+    <script>
+        document.getElementById("depositoForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const valor = parseInt(document.getElementById("valor").value);
+            const email = localStorage.getItem("sessionUser");
+            if (!email) {
+                alert("Você precisa estar logado para depositar créditos.");
+                return;
+            }
+            let user = JSON.parse(localStorage.getItem(email));
+            user.credito = (user.credito || 0) + valor;
+            localStorage.setItem(email, JSON.stringify(user));
+            alert(`Créditos atualizados! Seu saldo: ${user.credito}`);
+        });
+    </script>
+</body>
+
+</html>

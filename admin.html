@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo - Arena IA</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <h2>Painel Administrativo</h2>
+        <section id="usuarios">
+            <h3>Usuários Cadastrados</h3>
+            <ul id="listaUsuarios">
+                <!-- Lista preenchida via JavaScript -->
+            </ul>
+        </section>
+        <section id="novosPersonagens">
+            <h3>Adicionar Novo Personagem</h3>
+            <form id="novoCharForm">
+                <label for="nomeChar">Nome:</label>
+                <input type="text" id="nomeChar" required>
+                <label for="tipoChar">Tipo (<em>A</em> para Religião ou <em>B</em> para Ciência):</label>
+                <input type="text" id="tipoChar" maxlength="1" required>
+                <button type="submit">Adicionar</button>
+            </form>
+        </section>
+        <p><a href="index.html">Voltar ao jogo</a></p>
+    </div>
+    <script src="src/js/admin.js"></script>
+</body>
+
+</html>
