@@ -15,21 +15,21 @@ Um jogo experimental de batalha isométrica entre duas inteligências artificiai
 - Interface com contador de vida de cada personagem.
 
 ## 📦 Estrutura do Projeto
-
+``
 /projeto-apostas
-├── index.html          <!-- Tela principal do jogo e apostas -->
-├── login.html          <!-- Tela de login -->
-├── cadastro.html       <!-- Tela de cadastro -->
-├── deposito.html       <!-- Tela de depósito de créditos -->
-├── admin.html          <!-- Painel administrativo -->
-├── src
-│   ├── css
-│   │   └── styles.css
-│   └── js
-│       ├── script.js        <!-- Lógica do jogo e apostas -->
-│       ├── auth.js          <!-- Lógica de autenticação (login/cadastro) -->
-│       └── admin.js         <!-- Funções administrativas -->
-
+├── index.html            <!-- Tela principal do jogo e apostas -->    
+├── login.html            <!-- Tela de login -->      
+├── cadastro.html         <!-- Tela de cadastro -->  
+├── deposito.html         <!-- Tela de depósito de créditos -->      
+├── admin.html            <!-- Painel administrativo -->    
+├── src     
+│   ├── css      
+│   │   └── styles.css    
+│   └── js      
+│       ├── script.js          <!-- Lógica do jogo e apostas -->       
+│       ├── auth.js            <!-- Lógica de autenticação (login/cadastro) -->         
+│       └── admin.js           <!-- Funções administrativas -->      
+``
 
 ## 💡 Como Rodar
 
