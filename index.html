@@ -12,12 +12,13 @@
     <header>
         <div class="logo">Arena IA</div>
         <nav>
-            <ul>
+            <ul id="navMenu">
                 <li><a href="index.html">Início</a></li>
                 <li><a href="deposito.html">Depósito</a></li>
-                <li><a href="admin.html">Admin</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="admin.html" id="adminLink">Admin</a></li>
+                <li id="loginLink"><a href="login.html">Login</a></li>
+                <li id="cadastroLink"><a href="cadastro.html">Cadastro</a></li>
+                <li id="perfilLink" style="display: none;"><a href="#">Perfil</a></li>
             </ul>
         </nav>
     </header>
@@ -30,30 +31,43 @@
         <section class="game-container">
             <canvas id="canvas" width="1500" height="900"></canvas>
             <div id="status">Arena aprimorada – IAs em ação…</div>
-            <button onclick="location.reload()">🔁 Reiniciar</button>
             <div id="contadores">
                 <span id="contadorA"></span>&nbsp;&nbsp;&nbsp;
                 <span id="contadorB"></span>
             </div>
+            <button onclick="location.reload()">🔁 Reiniciar</button>
+
             <!-- Painel de apostas -->
             <section id="betting">
-                <h3>Faça sua aposta:</h3>
-                <p>Seu crédito: <span id="userCredit">0</span></p>
+                <h3>💰 Faça sua Aposta</h3>
+                <div class="bet-credit">Crédito disponível: <span id="userCredit">0</span> créditos</div>
+
                 <form id="betForm">
-                    <label>
-                        <input type="radio" name="bet" value="A" required>
-                        Apostar no <strong>Religião</strong> (🧙‍♂️)
-                    </label>
-                    <label>
-                        <input type="radio" name="bet" value="B">
-                        Apostar na <strong>Ciência</strong> (🤖)
-                    </label>
-                    <label for="valorAposta">Valor da aposta:</label>
-                    <input type="number" id="valorAposta" min="1" required>
-                    <button type="submit">Apostar</button>
+                    <div class="bet-targets">
+                        <label class="bet-card">
+                            <input type="radio" name="bet" value="A" required>
+                            <div class="bet-label">🧙‍♂️ Religião</div>
+                        </label>
+                        <label class="bet-card">
+                            <input type="radio" name="bet" value="B">
+                            <div class="bet-label">🤖 Ciência</div>
+                        </label>
+                    </div>
+
+                    <div class="bet-quick-values">
+                        <button type="button" onclick="setBetValue(10)">R$10</button>
+                        <button type="button" onclick="setBetValue(30)">R$30</button>
+                        <button type="button" onclick="setBetValue(50)">R$50</button>
+                    </div>
+
+                    <label for="valorAposta" class="valor-label">Valor personalizado:</label>
+                    <input type="number" id="valorAposta" min="1" placeholder="Outro valor...">
+
+                    <button type="submit" class="btn-apostar">Apostar Agora</button>
                 </form>
             </section>
-        </section>
+
+
     </main>
 
     <footer>
@@ -92,6 +106,53 @@
             alert(`Aposta registrada: ${aposta} no valor de ${valor} crédito(s).`);
         });
     </script>
+    <script>
+        function setBetValue(value) {
+            document.getElementById("valorAposta").value = value;
+        }
+    </script>
+
 </body>
 
 </html>
+<script>
+    const userEmail = localStorage.getItem("sessionUser");
+    
+
+    // Remove link admin se não for administrador
+    if (userEmail !== "admin@admin.com") {
+        const adminLink = document.querySelector('nav a[href="admin.html"]');
+        if (adminLink) adminLink.remove();
+    }
+
+    // Exibe crédito
+    if (userEmail) {
+        const user = JSON.parse(localStorage.getItem(userEmail));
+        document.getElementById("userCredit").textContent = user.credito || 0;
+    }
+
+    function setBetValue(value) {
+        document.getElementById("valorAposta").value = value;
+    }
+
+      // Mostrar crédito se estiver logado
+  if (userEmail) {
+    const user = JSON.parse(localStorage.getItem(userEmail));
+    document.getElementById("userCredit").textContent = user.credito || 0;
+
+    // Oculta Login/Cadastro, mostra Perfil
+    document.getElementById("loginLink").style.display = "none";
+    document.getElementById("cadastroLink").style.display = "none";
+    document.getElementById("perfilLink").style.display = "inline-block";
+
+    // Oculta link de admin se não for admin
+    if (userEmail !== "admin@admin.com") {
+      const adminLink = document.getElementById("adminLink");
+      if (adminLink) adminLink.style.display = "none";
+    }
+  } else {
+    // Oculta admin para quem não está logado
+    const adminLink = document.getElementById("adminLink");
+    if (adminLink) adminLink.style.display = "none";
+  }
+</script>

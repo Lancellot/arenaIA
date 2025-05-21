@@ -2,36 +2,121 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Depósito - Arena IA</title>
-    <link rel="stylesheet" href="src/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depósito - Arena IA</title>
+  <link rel="stylesheet" href="src/css/styles.css">
+  <style>
+    .deposito-container {
+      max-width: 600px;
+      margin: 60px auto;
+      background: rgba(10, 10, 10, 0.95);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      color: #fff;
+      text-align: center;
+    }
+
+    .deposito-container h2 {
+      color: #f4ca64;
+      margin-bottom: 20px;
+    }
+
+    .pacotes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pacote {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+      font-weight: bold;
+    }
+
+    .pacote:hover,
+    .pacote.selecionado {
+      border-color: #f4ca64;
+    }
+
+    .btn-comprar {
+      background-color: #f4ca64;
+      color: #000;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 30px;
+    }
+
+    .btn-comprar:hover {
+      background-color: #e0b44e;
+    }
+
+    .voltar {
+      margin-top: 20px;
+      display: inline-block;
+      color: #00e5ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="deposito-container">
-        <h2>Adquirir Créditos</h2>
-        <form id="depositoForm">
-            <label for="valor">Valor do Depósito:</label>
-            <input type="number" id="valor" min="1" required>
-            <button type="submit">Depositar</button>
-        </form>
-        <p><a href="index.html">Voltar ao jogo</a></p>
+  <div class="deposito-container">
+    <h2>Escolha seu Pacote</h2>
+    <p>Selecione um valor para adquirir créditos:</p>
+
+    <div class="pacotes">
+      <div class="pacote" onclick="selecionarPacote(5)">R$5</div>
+      <div class="pacote" onclick="selecionarPacote(10)">R$10</div>
+      <div class="pacote" onclick="selecionarPacote(25)">R$25</div>
+      <div class="pacote" onclick="selecionarPacote(50)">R$50</div>
+      <div class="pacote" onclick="selecionarPacote(100)">R$100</div>
     </div>
-    <script>
-        document.getElementById("depositoForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            const valor = parseInt(document.getElementById("valor").value);
-            const email = localStorage.getItem("sessionUser");
-            if (!email) {
-                alert("Você precisa estar logado para depositar créditos.");
-                return;
-            }
-            let user = JSON.parse(localStorage.getItem(email));
-            user.credito = (user.credito || 0) + valor;
-            localStorage.setItem(email, JSON.stringify(user));
-            alert(`Créditos atualizados! Seu saldo: ${user.credito}`);
-        });
-    </script>
+
+    <button class="btn-comprar" onclick="prosseguirPagamento()" disabled id="btnContinuar">Continuar para Pagamento</button>
+    <br>
+    <a class="voltar" href="index.html">⏪ Voltar ao jogo</a>
+  </div>
+
+  <script>
+    let valorSelecionado = null;
+
+    // Verifica login
+    const userLogado = localStorage.getItem("sessionUser");
+    if (!userLogado) {
+      alert("Você precisa estar logado para comprar créditos.");
+      window.location.href = "login.html";
+    }
+
+    function selecionarPacote(valor) {
+      valorSelecionado = valor;
+      document.querySelectorAll('.pacote').forEach(p => p.classList.remove('selecionado'));
+      event.target.classList.add('selecionado');
+      document.getElementById('btnContinuar').disabled = false;
+    }
+
+    function prosseguirPagamento() {
+      if (valorSelecionado && userLogado) {
+        localStorage.setItem('valorPacoteSelecionado', valorSelecionado);
+        window.location.href = 'pagamento.html';
+      }
+    }
+  </script>
 </body>
 
 </html>

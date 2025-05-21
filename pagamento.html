@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagamento - Arena IA</title>
+    <link rel="stylesheet" href="src/css/styles.css" />
+
+</head>
+
+<body>
+    <div class="pagamento-container">
+        <h2>Adquirir Créditos</h2>
+
+        <div class="pacotes">
+            <div class="pacote" onclick="selecionarPacote(5)">R$5</div>
+            <div class="pacote" onclick="selecionarPacote(10)">R$10</div>
+            <div class="pacote" onclick="selecionarPacote(25)">R$25</div>
+            <div class="pacote" onclick="selecionarPacote(50)">R$50</div>
+            <div class="pacote" onclick="selecionarPacote(100)">R$100</div>
+        </div>
+
+        <form id="formPagamento" class="pagamento-form">
+            <label for="valorSelecionado">Valor selecionado (R$):</label>
+            <input type="number" id="valorSelecionado" name="valor" readonly required>
+
+            <label>Método de Pagamento:</label>
+            <div class="metodo">
+                <label><input type="radio" name="metodo" value="pix" required> Pix</label>
+                <label><input type="radio" name="metodo" value="cartao"> Cartão de Crédito</label>
+            </div>
+
+            <div id="dadosCartao" style="display: none;">
+                <label for="nomeCartao">Nome no cartão:</label>
+                <input type="text" id="nomeCartao">
+
+                <label for="numeroCartao">Número do cartão:</label>
+                <input type="text" id="numeroCartao">
+
+                <label for="validade">Validade (MM/AA):</label>
+                <input type="text" id="validade">
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv">
+            </div>
+
+            <button type="submit" class="btn-finalizar">Finalizar Compra</button>
+        </form>
+    </div>
+
+    <script>
+        const valor = localStorage.getItem("valorPacoteSelecionado");
+        document.getElementById("valorSelecionado").value = valor;
+
+
+        document.querySelectorAll('input[name="metodo"]').forEach((el) => {
+            el.addEventListener('change', function () {
+                const isCartao = this.value === 'cartao';
+                document.getElementById('dadosCartao').style.display = isCartao ? 'block' : 'none';
+            });
+        });
+
+        document.getElementById('formPagamento').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert("Pagamento simulado com sucesso! Créditos adicionados.");
+        });
+    </script>
+</body>
+
+</html>
